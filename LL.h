@@ -54,10 +54,50 @@ public:
     T Retrieve(int i); //Retrieves item at index
     void Remove(int i); //Removes Item at index
 
-
 private:
     Node<T> *m_head;
     int m_size;
 };
+
+template<class T>
+LL<T>::LL() {
+    m_head = nullptr;
+    m_size = 0;
+}
+
+template<class T>
+LL<T>::~LL() {
+
+}
+
+template<class T>
+void LL<T>::Push(const T &data) {
+    Node<T> *newNode = new Node<T>(data);
+    if (m_head == nullptr){
+        m_head = newNode;
+        newNode->SetNext(nullptr);
+        m_size++;
+    }
+}
+
+template<class T>
+void LL<T>::PushMid(const T &) {
+
+}
+
+template<class T>
+void LL<T>::Pop() {
+
+}
+
+template<class T>
+T LL<T>::Retrieve(int i) {
+    return nullptr;
+}
+
+template<class T>
+void LL<T>::Remove(int i) {
+
+}
 
 #endif
