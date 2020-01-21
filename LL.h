@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 #ifndef LL_H
@@ -8,7 +9,7 @@ template<class T>
 class Node {
 public:
     Node(const T &data); // Constructor
-    T &GatData();
+    T &GetData();
     void SetData(const T &data);
     Node<T> *GetNext();
     void SetNext(Node<T> *next);
@@ -24,7 +25,7 @@ Node<T>::Node(const T &data) {
 }
 
 template<class T>
-T &Node<T>::GatData() {
+T &Node<T>::GetData() {
     return m_data;
 }
 
@@ -53,6 +54,9 @@ public:
     void Pop(); //Removes last item
     T Retrieve(int i); //Retrieves item at index
     void Remove(int i); //Removes Item at index
+    void Display(); //Displays the list
+    T* Begin(); //Start of list
+    T* End(); //Returns null
 
 private:
     Node<T> *m_head;
@@ -67,7 +71,20 @@ LL<T>::LL() {
 
 template<class T>
 LL<T>::~LL() {
-
+    if (m_head != nullptr){
+        Node<T> *last = m_head;
+        Node<T> *cur = m_head->GetNext();
+        while (cur != nullptr){
+            delete last;
+            last = cur;
+            cur = cur ->GetNext();
+            m_size--;
+        }
+        delete last;
+        cur = nullptr;
+        last = nullptr;
+        m_head = nullptr;
+    }
 }
 
 template<class T>
@@ -75,7 +92,15 @@ void LL<T>::Push(const T &data) {
     Node<T> *newNode = new Node<T>(data);
     if (m_head == nullptr){
         m_head = newNode;
-        newNode->SetNext(nullptr);
+        //newNode->SetNext(nullptr);
+        //delete newNode;
+        m_size++;
+    } else {
+        Node<T> *CURR = m_head;
+        while (CURR->GetNext() != nullptr){
+            CURR = CURR->GetNext();
+        }
+        CURR->SetNext(newNode);
         m_size++;
     }
 }
@@ -98,6 +123,25 @@ T LL<T>::Retrieve(int i) {
 template<class T>
 void LL<T>::Remove(int i) {
 
+}
+
+template<class T>
+T *LL<T>::Begin() {
+    return m_head;
+}
+
+template<class T>
+T *LL<T>::End() {
+    return nullptr;
+}
+
+template<class T>
+void LL<T>::Display() {
+    cout << "START--";
+    for (Node<T> *CURR = m_head; CURR != nullptr; CURR = CURR->GetNext()) {
+        cout << CURR->GetData() << "--";
+    }
+    cout << "END" << endl;
 }
 
 #endif

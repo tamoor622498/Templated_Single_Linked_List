@@ -3,4 +3,4 @@ project(Templated_Single_Linked_List)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Templated_Single_Linked_List main.cpp LL.h LL.cpp)
+add_executable(Templated_Single_Linked_List main.cpp LL.h)
