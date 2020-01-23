@@ -5,11 +5,10 @@
 using namespace std;
 
 int main() {
-    LL<int> *test = new LL<int>();
-    for (int i = 0; i <= 2; ++i) {
-        test->Push(i);
-    }
-    test->PushFront(99);
+    LL<string> *test = new LL<string>();
+    test->Push("one");
+    test->Push("Two");
+    test->Push("Three");
     test->Display();
     delete test;
     return 0;

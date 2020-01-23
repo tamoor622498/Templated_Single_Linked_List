@@ -50,6 +50,7 @@ class Iterator{
 public:
     Iterator(Node<T>* NodePoint);
     void operator++();
+    void operator++(int);
     bool End();
     T operator*();
 
@@ -69,6 +70,11 @@ bool Iterator<T>::End() {
 
 template<class T>
 void Iterator<T>::operator++() {
+    CURR = CURR->GetNext();
+}
+
+template<class T>
+void Iterator<T>::operator++(int) {
     CURR = CURR->GetNext();
 }
 
@@ -167,12 +173,9 @@ int LL<T>::GetSize() {
 
 template<class T>
 void LL<T>::Display() {
-    for (Iterator<T> I = begin(); I.End(); ++I){
-        cout << *I << endl;
-    }
     cout << "START--";
-    for (Node<T> *CURR = head; CURR != nullptr; CURR = CURR->GetNext()) {
-        cout << CURR->GetData() << "--";
+    for (Iterator<T> I = begin(); I.End(); I++){
+        cout << *I << "--";
     }
     cout << "END" << endl;
 }
