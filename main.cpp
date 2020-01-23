@@ -6,9 +6,10 @@ using namespace std;
 
 int main() {
     LL<int> *test = new LL<int>();
-    for (int i = 0; i <= 10; ++i) {
+    for (int i = 0; i <= 2; ++i) {
         test->Push(i);
     }
+    test->PushFront(99);
     test->Display();
     delete test;
     return 0;
