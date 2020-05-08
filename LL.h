@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 #include <string>
 
 using namespace std;
@@ -8,15 +10,19 @@ using namespace std;
 template<class T>
 class Node {
 public:
-    Node(const T &data);
-    T& GetData();
+    explicit Node(const T &data);
+
+    T &GetData();
+
     void SetData(const T &data);
-    Node<T>* GetNext();
+
+    Node<T> *GetNext();
+
     void SetNext(Node<T> *next);
 
 private:
     T m_data;
-    Node<T>* m_next;
+    Node<T> *m_next;
 };
 
 template<class T>
@@ -45,17 +51,21 @@ void Node<T>::SetNext(Node<T> *next) {
     m_next = next;
 }
 
-template <class T>
-class Iterator{
+template<class T>
+class Iterator {
 public:
-    Iterator(Node<T>* NodePoint);
+    explicit Iterator(Node<T> *NodePoint);
+
     void operator++();
+
     void operator++(int);
+
     bool End();
+
     T operator*();
 
 private:
-    Node<T>* CURR;
+    Node<T> *CURR;
 };
 
 template<class T>
@@ -83,22 +93,31 @@ T Iterator<T>::operator*() {
     return CURR->GetData();
 }
 
-template <class T>
-class LL{
+template<class T>
+class LL {
 public:
-        LL();
-        ~LL();
-        void PushFront(const T &data);
-        void Push(const T &data);
-        void Clear();
-        Iterator<T> begin();
-        int GetSize();
-        void Display();
+    LL();
+
+    ~LL();
+
+    void PushFront(const T &data);
+
+    void Push(const T &data);
+
+    void Clear();
+
+    Iterator<T> begin();
+
+    int GetSize();
+
+    void Display();
+
+    T &operator[](int x);
 
 private:
-        Node<T>* head;
-        int size;
-    };
+    Node<T> *head;
+    int size;
+};
 
 template<class T>
 LL<T>::LL() {
@@ -113,13 +132,13 @@ LL<T>::~LL() {
 
 template<class T>
 void LL<T>::PushFront(const T &data) {
-    Node<T>* newNode = new Node<T>(data);
+    auto *newNode = new Node<T>(data);
 
-    if (head == nullptr){
+    if (head == nullptr) {
         head = newNode;
         newNode->SetNext(nullptr);
     } else {
-        Node<T>* CurHead = head;
+        Node<T> *CurHead = head;
         head = newNode;
         newNode->SetNext(CurHead);
     }
@@ -127,15 +146,14 @@ void LL<T>::PushFront(const T &data) {
 
 template<class T>
 void LL<T>::Push(const T &data) {
-    Node<T> *newNode = new Node<T>(data);
-    if (head == nullptr){
+    auto *newNode = new Node<T>(data);
+    if (head == nullptr) {
         head = newNode;
         newNode->SetNext(nullptr);
-
         size++;
     } else {
         Node<T> *CURR = head;
-        while (CURR->GetNext() != nullptr){
+        while (CURR->GetNext() != nullptr) {
             CURR = CURR->GetNext();
         }
         CURR->SetNext(newNode);
@@ -145,18 +163,16 @@ void LL<T>::Push(const T &data) {
 
 template<class T>
 void LL<T>::Clear() {
-    if (head != nullptr){
+    if (head != nullptr) {
         Node<T> *last = head;
         Node<T> *cur = head->GetNext();
-        while (cur != nullptr){
+        while (cur != nullptr) {
             delete last;
             last = cur;
-            cur = cur ->GetNext();
+            cur = cur->GetNext();
             size--;
         }
         delete last;
-        cur = nullptr;
-        last = nullptr;
         head = nullptr;
     }
 }
@@ -174,10 +190,19 @@ int LL<T>::GetSize() {
 template<class T>
 void LL<T>::Display() {
     cout << "START--";
-    for (Iterator<T> I = begin(); I.End(); I++){
+    for (Iterator<T> I = begin(); I.End(); I++) {
         cout << *I << "--";
     }
     cout << "END" << endl;
+}
+
+template<class T>
+T &LL<T>::operator[](int x) {
+    auto *nodeAtIndex = head;
+    for (int i = 0; i < x; i++){
+        nodeAtIndex = nodeAtIndex->GetNext();
+    }
+    return nodeAtIndex->GetData();
 }
 
 #endif
